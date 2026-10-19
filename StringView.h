@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #define sv_fmt "%.*s"
 #define sv_arg(sv) (sv).count, (sv).data
+
+#define SV_NOT_FOUND SIZE_MAX
 
 /*
     To print a string view: 
@@ -51,8 +54,8 @@ StringView 	sv_trimmed_right( StringView sv );
 size_t 	sv_find( StringView sv, char c );
 size_t 	sv_find_from( StringView sv, char c, size_t start );
 
-size_t 	sv_find_sv( StringView sv, StringView needle ); // not implemented yet
-size_t 	sv_find_sv_from( StringView sv, StringView needle, size_t start );// not implemented yet
+size_t 	sv_find_sv( StringView sv, StringView needle );
+size_t 	sv_find_sv_from( StringView sv, StringView needle, size_t start );
 
 size_t 	sv_rfind( StringView sv, char c );
 size_t 	sv_rfind_sv( StringView sv, StringView needle );// not implemented yet

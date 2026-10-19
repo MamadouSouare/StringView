@@ -166,22 +166,53 @@ size_t 	sv_find( StringView sv, char c )
 {
 	for( size_t i = 0; i < sv.count; ++i )
 		if( sv.data[i] == c ) return i;
-	return sv.count;
+	return SV_NOT_FOUND;
 }
 
 size_t 	sv_find_from( StringView sv, char c, size_t start )
 {
 	for( size_t i = start; i < sv.count; ++i )
 		if( sv.data[i] == c ) return i;
-	return sv.count;
+	return SV_NOT_FOUND;
 }
+
+size_t 	sv_find_sv( StringView sv, StringView needle )
+{
+	if( needle.count > sv.count )
+		return SV_NOT_FOUND;
+
+	for( size_t i = 0, j = 0; i < sv.count; ++i, j = 0 ) {
+		while( i+j < sv.count && j < needle.count && sv.data[i] == needle.data[j] ) {
+			j++;
+		}
+		if( j == needle.count )
+			return i;
+	}
+	return SV_NOT_FOUND;
+}
+
+size_t 	sv_find_sv_from( StringView sv, StringView needle, size_t start )
+{
+	if( needle.count > sv.count )
+		return SV_NOT_FOUND;
+
+	for( size_t i = start, j = 0; i < sv.count; ++i, j = 0 ) {
+		while( i+j < sv.count && j < needle.count && sv.data[i] == needle.data[j] ) {
+			j++;
+		}
+		if( j == needle.count )
+			return i;
+	}
+	return SV_NOT_FOUND;
+}
+
 
 size_t 	sv_rfind( StringView sv, char c )
 {
 	for( size_t i = sv.count - 1; true; --i ) {
 		if( sv.data[i] == c ) return i;
 		if( i == 0 ) {
-			return sv.count;
+			return SV_NOT_FOUND;
 		}
 	}
 }
