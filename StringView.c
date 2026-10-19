@@ -164,15 +164,17 @@ StringView 	sv_trimmed_right( StringView sv )
 /* Recherche */
 size_t 	sv_find( StringView sv, char c )
 {
-	for( size_t i = 0; i < sv.count; ++i )
-		if( sv.data[i] == c ) return i;
+	char *ptr = memchr(sv.data, c, sv.count );
+	if( ptr )
+		return ptr-sv.data;
 	return SV_NOT_FOUND;
 }
 
 size_t 	sv_find_from( StringView sv, char c, size_t start )
 {
-	for( size_t i = start; i < sv.count; ++i )
-		if( sv.data[i] == c ) return i;
+	char *ptr = memchr(sv.data+start, c, sv.count );
+	if( ptr )
+		return ptr-sv.data;
 	return SV_NOT_FOUND;
 }
 
@@ -237,9 +239,9 @@ bool 	sv_equal_nocase( StringView sv1, StringView sv2 )
 int 	sv_compare( StringView sv1, StringView sv2 )
 {
 	int min = ( sv1.count >= sv2.count ) ? sv2.count : sv1.count;
-	for( size_t i = 0; i < min; i++ ) {
-		if( sv1.data[i] != sv2.data[i] ) return sv1.data[i] - sv2.data[i];
-	}
+	int diff = memcmp(sv1.data, sv2.data, min);
+	if( diff ) return diff;
+
 	if( sv1.count < sv2.count ) return -sv2.data[min];
 	if( sv2.count < sv1.count ) return sv1.data[min];
 
