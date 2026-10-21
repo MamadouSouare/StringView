@@ -94,7 +94,7 @@ Replace the filenames with the actual names used in the repository.
 
 ```c
 #include <stdio.h>
-#include "string_view.h"
+#include "StringView/StringView.h"
 
 int main(void)
 {
