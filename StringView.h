@@ -1,10 +1,7 @@
 #pragma once
 
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #define sv_fmt "%.*s"
 #define sv_arg(sv) (sv).count, (sv).data
@@ -12,14 +9,14 @@
 #define SV_NOT_FOUND SIZE_MAX
 
 /*
-    To print a string view: 
-    StringView sv = sv("Hello World!");
-    printf("sv = "sv_fmt"\n", sv_arg(sv));
+	To print a string view: 
+	StringView sv = sv("Hello World!");
+	printf("sv = "sv_fmt"\n", sv_arg(sv));
 */
 
 typedef struct {
-    const char *data;
-    size_t count;
+	const char *data;
+	size_t count;
 }   StringView;
 
 /* Construction */
@@ -58,7 +55,6 @@ size_t 	sv_find_sv( StringView sv, StringView needle );
 size_t 	sv_find_sv_from( StringView sv, StringView needle, size_t start );
 
 size_t 	sv_rfind( StringView sv, char c );
-size_t 	sv_rfind_sv( StringView sv, StringView needle );// not implemented yet
 
 /* Comparison */
 bool    sv_equal( StringView sv1, StringView sv2 );
@@ -70,3 +66,7 @@ int 	sv_compare_nocase( StringView sv1,  StringView sv2 );
 bool 	sv_all( StringView sv, int (*predicate)(int) );
 bool	sv_any( StringView sv, int (*predicate)(int) );
 bool 	sv_none( StringView sv, int (*predicate)(int) );
+
+/* Parsing numérique */
+bool 	sv_to_int( StringView sv, int *out );
+bool 	sv_to_uint( StringView sv, unsigned int *out );
